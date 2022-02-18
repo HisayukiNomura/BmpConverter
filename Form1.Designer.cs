@@ -43,8 +43,6 @@
             this.cmbDirection = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnConvert = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cmbStyle = new System.Windows.Forms.ComboBox();
             this.chkLargeEndian = new System.Windows.Forms.CheckBox();
             this.chkRevByte = new System.Windows.Forms.CheckBox();
             this.cmbPreset = new System.Windows.Forms.ComboBox();
@@ -90,7 +88,7 @@
             this.pnlImage.Controls.Add(this.picImage);
             this.pnlImage.Location = new System.Drawing.Point(15, 53);
             this.pnlImage.Name = "pnlImage";
-            this.pnlImage.Size = new System.Drawing.Size(514, 294);
+            this.pnlImage.Size = new System.Drawing.Size(262, 278);
             this.pnlImage.TabIndex = 15;
             // 
             // picImage
@@ -98,7 +96,7 @@
             this.picImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picImage.Location = new System.Drawing.Point(0, 0);
             this.picImage.Name = "picImage";
-            this.picImage.Size = new System.Drawing.Size(514, 294);
+            this.picImage.Size = new System.Drawing.Size(262, 278);
             this.picImage.TabIndex = 0;
             this.picImage.TabStop = false;
             // 
@@ -119,7 +117,7 @@
             // lblInfo
             // 
             this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblInfo.Location = new System.Drawing.Point(537, 350);
+            this.lblInfo.Location = new System.Drawing.Point(354, 334);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(218, 23);
             this.lblInfo.TabIndex = 17;
@@ -130,17 +128,17 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(540, 55);
+            this.label2.Location = new System.Drawing.Point(301, 47);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 12);
+            this.label2.Size = new System.Drawing.Size(58, 12);
             this.label2.TabIndex = 18;
-            this.label2.Text = "変換後のサイズ";
+            this.label2.Text = "サイズ変換";
             // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(692, 55);
+            this.label3.Location = new System.Drawing.Point(425, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(12, 12);
             this.label3.TabIndex = 21;
@@ -150,7 +148,7 @@
             // 
             this.chkKeepRatio.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.chkKeepRatio.AutoSize = true;
-            this.chkKeepRatio.Location = new System.Drawing.Point(639, 78);
+            this.chkKeepRatio.Location = new System.Drawing.Point(497, 46);
             this.chkKeepRatio.Name = "chkKeepRatio";
             this.chkKeepRatio.Size = new System.Drawing.Size(81, 16);
             this.chkKeepRatio.TabIndex = 22;
@@ -160,7 +158,7 @@
             // numWSize
             // 
             this.numWSize.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.numWSize.Location = new System.Drawing.Point(644, 53);
+            this.numWSize.Location = new System.Drawing.Point(377, 45);
             this.numWSize.Maximum = new decimal(new int[] {
             8000,
             0,
@@ -184,7 +182,7 @@
             // numHSize
             // 
             this.numHSize.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.numHSize.Location = new System.Drawing.Point(710, 53);
+            this.numHSize.Location = new System.Drawing.Point(443, 45);
             this.numHSize.Maximum = new decimal(new int[] {
             4000,
             0,
@@ -215,7 +213,7 @@
             "bytemap: RGB555-2bytes",
             "bytemap: RGB565-2bytes",
             "bitmap : B/W"});
-            this.cmbColor.Location = new System.Drawing.Point(570, 150);
+            this.cmbColor.Location = new System.Drawing.Point(387, 118);
             this.cmbColor.Name = "cmbColor";
             this.cmbColor.Size = new System.Drawing.Size(181, 20);
             this.cmbColor.TabIndex = 25;
@@ -224,11 +222,11 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(535, 153);
+            this.label4.Location = new System.Drawing.Point(330, 118);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 12);
+            this.label4.Size = new System.Drawing.Size(51, 12);
             this.label4.TabIndex = 26;
-            this.label4.Text = "色数";
+            this.label4.Text = "色の形式";
             // 
             // cmbDirection
             // 
@@ -240,7 +238,7 @@
             "右上→左下",
             "左下→右上",
             "右下→左上"});
-            this.cmbDirection.Location = new System.Drawing.Point(570, 218);
+            this.cmbDirection.Location = new System.Drawing.Point(387, 188);
             this.cmbDirection.Name = "cmbDirection";
             this.cmbDirection.Size = new System.Drawing.Size(181, 20);
             this.cmbDirection.TabIndex = 27;
@@ -249,16 +247,16 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(535, 221);
+            this.label5.Location = new System.Drawing.Point(294, 191);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 12);
+            this.label5.Size = new System.Drawing.Size(87, 12);
             this.label5.TabIndex = 28;
-            this.label5.Text = "方向";
+            this.label5.Text = "ビットマップの方向";
             // 
             // btnConvert
             // 
             this.btnConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConvert.Location = new System.Drawing.Point(680, 324);
+            this.btnConvert.Location = new System.Drawing.Point(497, 308);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(75, 23);
             this.btnConvert.TabIndex = 29;
@@ -266,35 +264,11 @@
             this.btnConvert.UseVisualStyleBackColor = true;
             this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(535, 246);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 12);
-            this.label6.TabIndex = 31;
-            this.label6.Text = "形式";
-            // 
-            // cmbStyle
-            // 
-            this.cmbStyle.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.cmbStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStyle.FormattingEnabled = true;
-            this.cmbStyle.Items.AddRange(new object[] {
-            "ベタファイル",
-            "Cソース(byte配列)",
-            "Cソース(word配列)"});
-            this.cmbStyle.Location = new System.Drawing.Point(570, 243);
-            this.cmbStyle.Name = "cmbStyle";
-            this.cmbStyle.Size = new System.Drawing.Size(181, 20);
-            this.cmbStyle.TabIndex = 30;
-            // 
             // chkLargeEndian
             // 
             this.chkLargeEndian.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.chkLargeEndian.AutoSize = true;
-            this.chkLargeEndian.Location = new System.Drawing.Point(639, 176);
+            this.chkLargeEndian.Location = new System.Drawing.Point(463, 144);
             this.chkLargeEndian.Name = "chkLargeEndian";
             this.chkLargeEndian.Size = new System.Drawing.Size(105, 16);
             this.chkLargeEndian.TabIndex = 32;
@@ -305,11 +279,11 @@
             // 
             this.chkRevByte.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.chkRevByte.AutoSize = true;
-            this.chkRevByte.Location = new System.Drawing.Point(639, 196);
+            this.chkRevByte.Location = new System.Drawing.Point(370, 166);
             this.chkRevByte.Name = "chkRevByte";
-            this.chkRevByte.Size = new System.Drawing.Size(112, 16);
+            this.chkRevByte.Size = new System.Drawing.Size(204, 16);
             this.chkRevByte.TabIndex = 33;
-            this.chkRevByte.Text = "バイト順を逆にする";
+            this.chkRevByte.Text = "バイト順を逆にする(16bit時のみ有効）";
             this.chkRevByte.UseVisualStyleBackColor = true;
             // 
             // cmbPreset
@@ -319,10 +293,11 @@
             this.cmbPreset.FormattingEnabled = true;
             this.cmbPreset.Items.AddRange(new object[] {
             "None",
-            "LCD_ShowPicture(Sipeed)",
-            "LCD_WR_DATA8(Sipeed)",
-            "LCD_WR_DATA(Sipeed)"});
-            this.cmbPreset.Location = new System.Drawing.Point(570, 100);
+            "8ビット配列(LCD_ShowPicture)",
+            "8ビット配列(LCD_WR_DATA8）",
+            "16ビット配列(LCD_WR_DATA)",
+            "ベタファイル"});
+            this.cmbPreset.Location = new System.Drawing.Point(387, 92);
             this.cmbPreset.Name = "cmbPreset";
             this.cmbPreset.Size = new System.Drawing.Size(181, 20);
             this.cmbPreset.TabIndex = 34;
@@ -332,23 +307,21 @@
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(535, 103);
+            this.label7.Location = new System.Drawing.Point(335, 95);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(30, 12);
+            this.label7.Size = new System.Drawing.Size(46, 12);
             this.label7.TabIndex = 35;
-            this.label7.Text = "セット";
+            this.label7.Text = "プリセット";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(769, 371);
+            this.ClientSize = new System.Drawing.Size(586, 355);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cmbPreset);
             this.Controls.Add(this.chkRevByte);
             this.Controls.Add(this.chkLargeEndian);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.cmbStyle);
             this.Controls.Add(this.btnConvert);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmbDirection);
@@ -397,8 +370,6 @@
         private System.Windows.Forms.ComboBox cmbDirection;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnConvert;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cmbStyle;
         private System.Windows.Forms.CheckBox chkLargeEndian;
         private System.Windows.Forms.CheckBox chkRevByte;
         private System.Windows.Forms.ComboBox cmbPreset;

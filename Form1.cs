@@ -40,10 +40,12 @@ namespace BmpConverter {
         static int MSG_BMPNOTSUPPORTED = 1;
         static int MSG_FILENOTFOUND = 2;
         static int MSG_NOTLOADDED = 3;
+        static int MSG_NONENOTSUPPORTED = 4;
         static string[] strErrorMsg = { "サイズが12800の倍数になっていません。\r\nLCD_ShowPictureを使う場合、引数の矩形にかかわらず一回の関数呼び出しでは\r\n必ず12800バイト転送されます。\r\n現在のサイズは12800の倍数になっていないため、LCD＿ShowPicture関数は正しく動作しません\r\n\r\n本当に実行しますか？" ,
                                         "ファイルのイメージ形式が無効、もしくはGDI+ファイルのピクセル形式はサポートされていません",
                                         "ファイルがみつかりません",
-                                        "画像が読み込まれていません\r\n読み込みボタンをクリックして画像を読み込んでから操作してください"};
+                                        "画像が読み込まれていません\r\n読み込みボタンをクリックして画像を読み込んでから操作してください",
+                                        "プリセットにNoneは指定できません。"};
 
         private void btnReadBmp_Click(object sender, EventArgs e)
         {
@@ -52,10 +54,10 @@ namespace BmpConverter {
             try {
                 im = Image.FromFile(strFilename);
             } catch (OutOfMemoryException ex) {
-                MessageBox.Show(this,strErrorMsg[1], "エラー");
+                MessageBox.Show(this,strErrorMsg[MSG_BMPNOTSUPPORTED], "エラー");
                 return;
             } catch (FileNotFoundException ex) {
-                MessageBox.Show(this, strErrorMsg[2], "エラー");
+                MessageBox.Show(this, strErrorMsg[MSG_FILENOTFOUND], "エラー");
                 return;
             } catch (Exception ex) {
                 MessageBox.Show(this, "その他のエラー（"+ex.Message + ")\r\n" + ex.StackTrace, "エラー");
@@ -216,7 +218,7 @@ namespace BmpConverter {
             }
 
             String strSaveFn;
-            if (cmbStyle.SelectedIndex == 0) {
+            if (cmbPreset.SelectedIndex == 4) { 
                 strSaveFn = Path.GetDirectoryName(strFilename) + "\\" + Path.GetFileNameWithoutExtension(strFilename) + ".bin";
             } else {
                 strSaveFn = Path.GetDirectoryName(strFilename) + "\\" + Path.GetFileNameWithoutExtension(strFilename) + ".c";
@@ -297,7 +299,7 @@ namespace BmpConverter {
 
 
 
-            if (cmbStyle.SelectedIndex == 0) {                  // ベタファイルの時はそのまま書く
+            if (cmbPreset.SelectedIndex == 4) {                  // ベタファイルの時はそのまま書く
                 using (FileStream fs = new FileStream(strSaveFn, FileMode.Create)) {
                     using (BinaryWriter sw = new BinaryWriter(fs)) {
                         foreach (byte[] data in bitmaps) {
@@ -306,7 +308,7 @@ namespace BmpConverter {
                     }
 
                 }
-            } else if (cmbStyle.SelectedIndex == 1) {                                        // バイト配列ソースコード
+            } else if (cmbPreset.SelectedIndex == 2 || cmbPreset.SelectedIndex == 1) {                                        // バイト配列ソースコード
 
                 using (StreamWriter sw = new StreamWriter(strSaveFn)) {
                     int lineCount = 0;
@@ -362,7 +364,11 @@ namespace BmpConverter {
                         sw.Write("//LCD_Address_Set(0,0,{0},{1});\r\n//for (int i = 0; i < {2}*2 ; i++) {{\r\n//    LCD_WR_DATA8(bmp[i]);\r\n//}}\r\n", myBitmap.Width, myBitmap.Height, writtenBytes.ToString());
                     }
                 }
-            } else {                                                                    //　それ以外。今のところワード配列
+                DialogResult dr = MessageBox.Show(this, "バイト配列（Cソースコード形式）への変換が完了しました\r\n" + strSaveFn + "に保存されています\r\nエディタで開きますか？", "成功", MessageBoxButtons.YesNo);
+                if (dr == DialogResult.Yes) {
+                    System.Diagnostics.Process p = System.Diagnostics.Process.Start(strSaveFn);
+                }
+            } else if (cmbPreset.SelectedIndex == 3){                                                                    //　それ以外。今のところワード配列
                 using (StreamWriter sw = new StreamWriter(strSaveFn)) {
                     int lineCount = 0;
                     int wrapCount = 0;
@@ -401,7 +407,13 @@ namespace BmpConverter {
                     sw.Write("// WORD:{0}  ({1},{2})-({3},{4}) \r\n", writtenBytes.ToString(), iStartX, iStartY, iEndX, iEndY);
                     sw.Write("//LCD_Address_Set(0,0,{0},{1});\r\n//for (int i = 0; i < {2} ; i++) {{\r\n//    LCD_WR_DATA(bmp[i]);\r\n//}}\r\n", myBitmap.Width, myBitmap.Height, writtenBytes.ToString());
                 }
+                DialogResult dr = MessageBox.Show(this, "ワード配列（Cソースコード形式）への変換が完了しました\r\n" + strSaveFn + "に保存されています\r\nエディタで開きますか？", "成功", MessageBoxButtons.YesNo);
+                if (dr == DialogResult.Yes) {
+                    System.Diagnostics.Process p = System.Diagnostics.Process.Start(strSaveFn);
+                }
 
+            } else {
+                MessageBox.Show(this, strErrorMsg[MSG_NONENOTSUPPORTED], "エラー");
             }
         }
         private void cmbPreset_SelectedIndexChanged(object sender, EventArgs e)
@@ -410,19 +422,16 @@ namespace BmpConverter {
             } else if (cmbPreset.SelectedIndex == 1) {
                 cmbColor.SelectedIndex = 2;
                 cmbDirection.SelectedIndex = 3;
-                cmbStyle.SelectedIndex = 1;
                 chkLargeEndian.Checked = true;
                 chkRevByte.Checked = false;
             } else if (cmbPreset.SelectedIndex == 2) {
                 cmbColor.SelectedIndex = 2;
                 cmbDirection.SelectedIndex = 0;
-                cmbStyle.SelectedIndex = 1;
                 chkLargeEndian.Checked = false;
                 chkRevByte.Checked = false;
             } else if (cmbPreset.SelectedIndex == 3) {
                 cmbColor.SelectedIndex = 2;
                 cmbDirection.SelectedIndex = 0;
-                cmbStyle.SelectedIndex = 2;
                 chkLargeEndian.Checked = false;
                 chkRevByte.Checked = false;
             }
