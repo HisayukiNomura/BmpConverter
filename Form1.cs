@@ -211,7 +211,7 @@ namespace BmpConverter {
             //　警告の表示
 
             if (cmbPreset.SelectedIndex == 1) {         // LCD_ShowPictureは12800の単位である必要がある
-                if ((myBitmap.Width * myBitmap.Height) % 12800 != 0) {
+                if (((myBitmap.Width * myBitmap.Height)*2) % 12800 != 0) {
                     DialogResult dr = MessageBox.Show(this, strErrorMsg[MSG_BMPSIZENOTVALID], "警告", MessageBoxButtons.OKCancel);
                     if (dr == DialogResult.Cancel) return;
                 }
@@ -317,7 +317,12 @@ namespace BmpConverter {
                     bool isEOLDone = false;
                     foreach (byte[] data in bitmaps) {
                         if (lineCount == 0 && wrapCount == 0) {
-                            sw.Write("const u8 bmp[]={");
+                            if (cmbPreset.SelectedIndex == 1) {
+                                sw.Write("unsigned char image[]={");
+
+                            } else {
+                                sw.Write("const u8 bmp[]={");
+                            }
                         } else if (wrapCount == 0) {
                             isEOLDone = false;
                         }
@@ -351,17 +356,13 @@ namespace BmpConverter {
                         sw.Write("};\r\n");
                     }
 
-                    sw.Write("// Bytes:{0}  ({1},{2})-({3},{4}) \r\n", writtenBytes.ToString(), iStartX, iStartY, iEndX, iEndY);
+                    sw.Write("// Bytes:{0}  ({1},{2})-({3},{4}) \r\n", writtenBytes.ToString(), iStartX, iStartY, iEndX-1, iEndY-1);
                     if (cmbPreset.SelectedIndex == 1) {
                         sw.Write(
-                            "//int j=12800-1;\r\n" +
-                            "//for (int i = 0; i < {0}*2 ; i++) {{\r\n" +
-                            "//    mage[j] = bmp[i];\r\n//    j--;" +
-                           "//}}\r\n" +
-                            "// LCD_ShowPicture(0,0,{1},{2};\r\n", writtenBytes.ToString(), myBitmap.Width, myBitmap.Height);
+                            "// LCD_ShowPicture(0,0,{1},{2});\r\n", writtenBytes.ToString(), myBitmap.Width-1, myBitmap.Height-1);
 
                     } else if (cmbPreset.SelectedIndex == 2) {
-                        sw.Write("//LCD_Address_Set(0,0,{0},{1});\r\n//for (int i = 0; i < {2}*2 ; i++) {{\r\n//    LCD_WR_DATA8(bmp[i]);\r\n//}}\r\n", myBitmap.Width, myBitmap.Height, writtenBytes.ToString());
+                        sw.Write("//LCD_Address_Set(0,0,{0},{1});\r\n//for (int i = 0; i < {2}*2 ; i++) {{\r\n//    LCD_WR_DATA8(bmp[i]);\r\n//}}\r\n", myBitmap.Width-1, myBitmap.Height-1, writtenBytes.ToString());
                     }
                 }
                 DialogResult dr = MessageBox.Show(this, "バイト配列（Cソースコード形式）への変換が完了しました\r\n" + strSaveFn + "に保存されています\r\nエディタで開きますか？", "成功", MessageBoxButtons.YesNo);
@@ -404,8 +405,8 @@ namespace BmpConverter {
                         sw.Write("};\r\n");
                     }
 
-                    sw.Write("// WORD:{0}  ({1},{2})-({3},{4}) \r\n", writtenBytes.ToString(), iStartX, iStartY, iEndX, iEndY);
-                    sw.Write("//LCD_Address_Set(0,0,{0},{1});\r\n//for (int i = 0; i < {2} ; i++) {{\r\n//    LCD_WR_DATA(bmp[i]);\r\n//}}\r\n", myBitmap.Width, myBitmap.Height, writtenBytes.ToString());
+                    sw.Write("// WORD:{0}  ({1},{2})-({3},{4}) \r\n", writtenBytes.ToString(), iStartX, iStartY, iEndX-1, iEndY-1);
+                    sw.Write("//LCD_Address_Set(0,0,{0},{1});\r\n//for (int i = 0; i < {2} ; i++) {{\r\n//    LCD_WR_DATA(bmp[i]);\r\n//}}\r\n", myBitmap.Width-1, myBitmap.Height-1, writtenBytes.ToString());
                 }
                 DialogResult dr = MessageBox.Show(this, "ワード配列（Cソースコード形式）への変換が完了しました\r\n" + strSaveFn + "に保存されています\r\nエディタで開きますか？", "成功", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes) {
@@ -421,8 +422,8 @@ namespace BmpConverter {
             if (cmbPreset.SelectedIndex == 0) {
             } else if (cmbPreset.SelectedIndex == 1) {
                 cmbColor.SelectedIndex = 2;
-                cmbDirection.SelectedIndex = 3;
-                chkLargeEndian.Checked = true;
+                cmbDirection.SelectedIndex = 0;
+                chkLargeEndian.Checked = false;
                 chkRevByte.Checked = false;
             } else if (cmbPreset.SelectedIndex == 2) {
                 cmbColor.SelectedIndex = 2;
