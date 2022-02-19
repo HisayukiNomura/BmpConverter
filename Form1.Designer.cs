@@ -68,7 +68,6 @@
             this.txtFilename.Name = "txtFilename";
             this.txtFilename.Size = new System.Drawing.Size(252, 19);
             this.txtFilename.TabIndex = 1;
-            this.txtFilename.Text = "C:\\Users\\hisay\\Pictures\\work\\breakout.jpg";
             // 
             // btnBrowse
             // 
