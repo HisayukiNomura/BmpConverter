@@ -269,6 +269,15 @@ namespace BmpConverter {
                     dy = -1;
                     break;
                 }
+                case 4: {
+                    iStartX = myBitmap.Width - 1;
+                    iEndX = -1;
+                    iStartY = myBitmap.Height - 1;
+                    iEndY = -1;
+                    dx = -1;
+                    dy = -1;
+                    break;
+                }
                 default: {
                     return;
                 }
@@ -307,7 +316,72 @@ namespace BmpConverter {
                         }
                     }
 
+
+                    /*
+                     bool ReadNShow()
+                    {
+                        FATFS fs;
+                        unsigned char bmp[1728];
+                        FRESULT fr;
+                        fr = f_mount(&fs, "", 1);
+                        if (fr != FR_OK) {
+                            return FALSE;           // Mout Error
+                        }
+
+                        FIL fil;
+                        UINT br = 0;
+                        fr = f_open(&fil, "apple.bin", FA_READ);
+                        if (fr != FR_OK) {
+                            return FALSE;           // Open Error
+                        }
+                        f_lseek(&fil, 0);
+                        fr = f_read(&fil, bmp, sizeof(bmp), &br);
+                        if (br != 1728) {
+                            f_close(&fil);
+                            return FALSE;           // Read Error
+                        }
+                        LCD_Address_Set(0,0,26,31);
+                        for (int i = 0; i < 1728 ; i++) {
+                            LCD_WR_DATA8(bmp[i]);
+                        }
+                        f_close(&fil);
+                        return TRUE;
+                    }
+                     */
+
+
+
+
                 }
+                String strSampleCode = "";
+
+                strSampleCode = "bool ReadNShow()\r\n{\r\n";
+                strSampleCode += "  FATFS fs;\r\nFRESULT fr;\r\n";
+                strSampleCode += "  unsigned char bmp[" + bitmaps.Count*2 + "];\r\n";
+                strSampleCode += "  fr = f_mount(&fs, \"\", 1);\r\n";
+                strSampleCode += "  if (fr != FR_OK) {return FALSE;}  // Mount Error\r\n";
+                strSampleCode += "  FIL fil;\r\n  UINT br = 0;\r\n";
+                strSampleCode += "  fr = f_open(&fil, \"" + Path.GetFileNameWithoutExtension(strFilename) +".bin" + "\" , FA_READ);\r\n";
+                strSampleCode += "  if (fr != FR_OK) {return FALSE;}  // Open Error \r\n";
+                strSampleCode += "  f_lseek(&fil, 0);\r\n";
+                strSampleCode += "  fr = f_read(&fil, bmp, sizeof(bmp), &br);\r\n";
+                strSampleCode += "  if (br != sizeof(bmp)) {f_close(&fil);return FALSE;}  // Read Error\r\n";
+                strSampleCode += "  LCD_Address_Set(0, 0," + (myBitmap.Width - 1).ToString() + "," + (myBitmap.Height - 1).ToString() + ");\r\n";
+                strSampleCode += "  for (int i = 0; i < sizeof(bmp); i++) {\r\n";
+                strSampleCode += "    LCD_WR_DATA8(bmp[i]);\r\n";
+                strSampleCode += "  }\r\n";
+                strSampleCode += "  f_close(&fil);\r\n";
+                strSampleCode += "  return TRUE;\r\n";
+                strSampleCode += "}\r\n";
+
+                String strSampleFn = Path.GetDirectoryName(strFilename) + "\\" + Path.GetFileNameWithoutExtension(strFilename) + ".c";
+
+                File.WriteAllText(strSampleFn, strSampleCode);
+                DialogResult dr = MessageBox.Show(this, "ベタファイルへの変換が完了しました\r\nバイナリ：" + strSaveFn + "\r\nサンプル：" + strSampleFn +"に保存されています\r\n読み込み用のコード例をエディタで開きますか？", "成功", MessageBoxButtons.YesNo);
+                if (dr == DialogResult.Yes) {
+                    System.Diagnostics.Process p = System.Diagnostics.Process.Start(strSampleFn);
+                }
+
             } else if (cmbPreset.SelectedIndex == 2 || cmbPreset.SelectedIndex == 1) {                                        // バイト配列ソースコード
 
                 using (StreamWriter sw = new StreamWriter(strSaveFn)) {
