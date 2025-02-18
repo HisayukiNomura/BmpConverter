@@ -47,6 +47,11 @@
             this.chkRevByte = new System.Windows.Forms.CheckBox();
             this.cmbPreset = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.txtSpecialColor = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtSPColorR = new System.Windows.Forms.TextBox();
+            this.txtSPColorG = new System.Windows.Forms.TextBox();
+            this.txtSPColorB = new System.Windows.Forms.TextBox();
             this.pnlImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWSize)).BeginInit();
@@ -312,11 +317,57 @@
             this.label7.TabIndex = 35;
             this.label7.Text = "プリセット";
             // 
+            // txtSpecialColor
+            // 
+            this.txtSpecialColor.Location = new System.Drawing.Point(519, 226);
+            this.txtSpecialColor.Name = "txtSpecialColor";
+            this.txtSpecialColor.Size = new System.Drawing.Size(49, 19);
+            this.txtSpecialColor.TabIndex = 36;
+            this.txtSpecialColor.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(301, 229);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(41, 12);
+            this.label6.TabIndex = 37;
+            this.label6.Text = "特殊色";
+            // 
+            // txtSPColorR
+            // 
+            this.txtSPColorR.Location = new System.Drawing.Point(356, 226);
+            this.txtSPColorR.Name = "txtSPColorR";
+            this.txtSPColorR.Size = new System.Drawing.Size(38, 19);
+            this.txtSPColorR.TabIndex = 38;
+            this.txtSPColorR.Text = "0";
+            // 
+            // txtSPColorG
+            // 
+            this.txtSPColorG.Location = new System.Drawing.Point(400, 226);
+            this.txtSPColorG.Name = "txtSPColorG";
+            this.txtSPColorG.Size = new System.Drawing.Size(37, 19);
+            this.txtSPColorG.TabIndex = 39;
+            this.txtSPColorG.Text = "0";
+            // 
+            // txtSPColorB
+            // 
+            this.txtSPColorB.Location = new System.Drawing.Point(443, 226);
+            this.txtSPColorB.Name = "txtSPColorB";
+            this.txtSPColorB.Size = new System.Drawing.Size(37, 19);
+            this.txtSPColorB.TabIndex = 40;
+            this.txtSPColorB.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(586, 355);
+            this.Controls.Add(this.txtSPColorB);
+            this.Controls.Add(this.txtSPColorG);
+            this.Controls.Add(this.txtSPColorR);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtSpecialColor);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cmbPreset);
             this.Controls.Add(this.chkRevByte);
@@ -373,6 +424,11 @@
         private System.Windows.Forms.CheckBox chkRevByte;
         private System.Windows.Forms.ComboBox cmbPreset;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtSpecialColor;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtSPColorR;
+        private System.Windows.Forms.TextBox txtSPColorG;
+        private System.Windows.Forms.TextBox txtSPColorB;
     }
 }
 

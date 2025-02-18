@@ -16,6 +16,11 @@ namespace BmpConverter {
         double aspectRatio;
         String strFilename;
 
+        int spColR;
+        int spColG;
+        int spColB;
+        int spColor;
+
         public Form1()
         {
             InitializeComponent();
@@ -133,52 +138,57 @@ namespace BmpConverter {
 
 
                 Int16 col;
-                if (chkLargeEndian.Checked) {
-                    if (cmbColor.SelectedIndex == 2) { // RGB565
-                        revR = (byte)(c.R >> 3);
-                        revG = (byte)(c.G >> 2);
-                        revB = (byte)(c.B >> 3);
-                        revR = swapbit5(revR, 5);
-                        revG = swapbit5(revG, 6);
-                        revB = swapbit5(revB, 5);
-                    } else if (cmbColor.SelectedIndex == 1) {   //RGB555
-                        revR = (byte)(c.R >> 3);
-                        revB = (byte)(c.B >> 3);
-                        revG = (byte)(c.G >> 3);
-                        revR = swapbit5(revR, 5);
-                        revG = swapbit5(revG, 5);
-                        revB = swapbit5(revB, 5);
+                if (c.R == spColR && c.G == spColG && c.B == spColB) {
+                    ans[0] = (byte)(spColor >> 8);
+                    ans[1] = (byte)(spColor & 0xFF);
+                } else {
+                    if (chkLargeEndian.Checked) {
+                        if (cmbColor.SelectedIndex == 2) { // RGB565
+                            revR = (byte)(c.R >> 3);
+                            revG = (byte)(c.G >> 2);
+                            revB = (byte)(c.B >> 3);
+                            revR = swapbit5(revR, 5);
+                            revG = swapbit5(revG, 6);
+                            revB = swapbit5(revB, 5);
+                        } else if (cmbColor.SelectedIndex == 1) {   //RGB555
+                            revR = (byte)(c.R >> 3);
+                            revB = (byte)(c.B >> 3);
+                            revG = (byte)(c.G >> 3);
+                            revR = swapbit5(revR, 5);
+                            revG = swapbit5(revG, 5);
+                            revB = swapbit5(revB, 5);
+                        }
+                    } else {
+                        if (cmbColor.SelectedIndex == 2) { // RGB565
+                            revR = (byte)(c.R >> 3);
+                            revG = (byte)(c.G >> 2);
+                            revB = (byte)(c.B >> 3);
+                        } else if (cmbColor.SelectedIndex == 1) {   //RGB555
+                            revR = (byte)(c.R >> 3);
+                            revB = (byte)(c.B >> 3);
+                            revG = (byte)(c.G >> 3);
+
+                        }
                     }
-                } else {
                     if (cmbColor.SelectedIndex == 2) { // RGB565
-                        revR = (byte)(c.R >> 3);
-                        revG = (byte)(c.G >> 2);
-                        revB = (byte)(c.B >> 3);
-                    } else if (cmbColor.SelectedIndex == 1) {   //RGB555
-                        revR = (byte)(c.R >> 3);
-                        revB = (byte)(c.B >> 3);
-                        revG = (byte)(c.G >> 3);
-
+                        col = (Int16)(revR << 11);
+                        col |= (Int16)(revG << 5);
+                        col |= (Int16)(revB);
+                    } else {
+                        col = (Int16)(revR << 10);
+                        col |= (Int16)(revG << 5);
+                        col |= (Int16)(revB);
                     }
-                }
-                if (cmbColor.SelectedIndex == 2) { // RGB565
-                    col = (Int16)(revR << 11);
-                    col |= (Int16)(revG << 5);
-                    col |= (Int16)(revB);
-                } else {
-                    col = (Int16)(revR << 10);
-                    col |= (Int16)(revG << 5);
-                    col |= (Int16)(revB);
-                }
 
 
 
-                if (chkRevByte.Checked) {
-                    ans[1] = (byte)(col >> 8);
-                    ans[0] = (byte)(col & 0xFF);
-                } else {
-                    ans[0] = (byte)(col >> 8);
-                    ans[1] = (byte)(col & 0xFF);
+                    if (chkRevByte.Checked) {
+                        ans[1] = (byte)(col >> 8);
+                        ans[0] = (byte)(col & 0xFF);
+                    } else {
+                        ans[0] = (byte)(col >> 8);
+                        ans[1] = (byte)(col & 0xFF);
+                    }
                 }
                 return ans;
             } else {
@@ -195,6 +205,10 @@ namespace BmpConverter {
                 MessageBox.Show(this, strErrorMsg[MSG_NOTLOADDED], "エラー");
                 return;
             }
+            spColR = int.Parse(txtSPColorR.Text);
+            spColG = int.Parse(txtSPColorG.Text);
+            spColB = int.Parse(txtSPColorB.Text);
+            spColor = int.Parse(txtSpecialColor.Text);
 
             try {
                 myBitmap = new Bitmap((int)numWSize.Value, (int)numHSize.Value/*, System.Drawing.Imaging.PixelFormat.Format16bppRgb555*/);
